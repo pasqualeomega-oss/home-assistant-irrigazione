@@ -1,0 +1,130 @@
+type: vertical-stack
+cards:
+  - type: custom:mushroom-title-card
+    title: 💧 Irrigazione Smart
+    subtitle: 2 zone + 3 fasce automatiche
+
+  - type: grid
+    square: false
+    columns: 2
+    cards:
+      - type: custom:mushroom-entity-card
+        entity: valve.irrigazione_zona_1
+        name: Zona 1
+        icon: mdi:sprinkler-variant
+        icon_color: green
+        layout: vertical
+        tap_action:
+          action: toggle
+
+      - type: custom:mushroom-entity-card
+        entity: valve.irrigazione_zona_2
+        name: Zona 2
+        icon: mdi:sprinkler-variant
+        icon_color: green
+        layout: vertical
+        tap_action:
+          action: toggle
+
+  - type: custom:stack-in-card
+    cards:
+      - type: entities
+        title: ⏱️ Durata Manuale
+        entities:
+          - input_number.durata_zona_1_minuti
+          - input_number.durata_zona_2_minuti
+
+      - type: entities
+        title: ⚙️ Zone Abilitate
+        entities:
+          - input_boolean.zona_1_abilitato
+          - input_boolean.zona_2_abilitato
+
+  - type: custom:stack-in-card
+    cards:
+      - type: entities
+        title: 🤖 Automazione
+        entities:
+          - input_boolean.irrigazione_automatica_abilitata
+          - input_select.giorni_irrigazione
+
+      - type: grid
+        columns: 3
+        cards:
+          - type: custom:mushroom-entity-card
+            entity: input_boolean.fascia_1_abilitata
+            name: 🌅 Fascia 1
+            icon: mdi:white-balance-sunny
+            icon_color: |
+              {% if is_state('sensor.fascia_1_attiva','on') %}
+                green
+              {% elif is_state('input_boolean.fascia_1_abilitata','on') %}
+                yellow
+              {% else %}
+                red
+              {% endif %}
+            secondary: >
+              {% set alba = as_timestamp(state_attr('sun.sun','next_rising')) +
+              (states('input_number.fascia_1_alba_offset')|int*60) %} {% set
+              fine = states('input_datetime.fascia_1_fine')[0:5] %} Inizio: {{
+              alba | timestamp_custom('%H:%M') }}, Fine: {{ fine }}
+            tap_action:
+              action: toggle
+
+          - type: custom:mushroom-entity-card
+            entity: input_boolean.fascia_2_abilitata
+            name: 🌇 Fascia 2
+            icon: mdi:weather-sunset
+            icon_color: |
+              {% if is_state('sensor.fascia_2_attiva','on') %}
+                green
+              {% elif is_state('input_boolean.fascia_2_abilitata','on') %}
+                yellow
+              {% else %}
+                red
+              {% endif %}
+            secondary: >
+              {% set tramonto =
+              as_timestamp(state_attr('sun.sun','next_setting')) +
+              (states('input_number.fascia_2_tramonto_offset')|int*60) %} {% set
+              fine = states('input_datetime.fascia_2_fine')[0:5] %} Inizio: {{
+              tramonto | timestamp_custom('%H:%M') }}, Fine: {{ fine }}
+            tap_action:
+              action: toggle
+
+          - type: custom:mushroom-entity-card
+            entity: input_boolean.fascia_3_abilitata
+            name: ⏰ Fascia 3
+            icon: mdi:clock-outline
+            icon_color: |
+              {% if is_state('sensor.fascia_3_attiva','on') %}
+                green
+              {% elif is_state('input_boolean.fascia_3_abilitata','on') %}
+                yellow
+              {% else %}
+                red
+              {% endif %}
+            secondary: >
+              Inizio: {{ states('input_datetime.fascia_3_inizio')[0:5] }}, Fine:
+              {{ states('input_datetime.fascia_3_fine')[0:5] }}
+            tap_action:
+              action: toggle
+
+  - type: entities
+    title: 🕑 Config Fasce
+    entities:
+      - entity: input_datetime.fascia_1_fine
+      - entity: input_number.fascia_1_alba_offset
+      - entity: input_datetime.fascia_2_fine
+      - entity: input_number.fascia_2_tramonto_offset
+      - entity: input_datetime.fascia_3_inizio
+      - entity: input_datetime.fascia_3_fine
+
+  - type: logbook
+    title: 📜 Storico Irrigazione
+    entities:
+      - valve.irrigazione_zona_1
+      - valve.irrigazione_zona_2
+
+grid_options:
+  columns: full

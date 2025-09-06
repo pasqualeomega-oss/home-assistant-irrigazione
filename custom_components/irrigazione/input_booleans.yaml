@@ -1,0 +1,20 @@
+zona_1_abilitato:
+  name: Zona 1 Abilitata
+  initial: on
+zona_2_abilitato:
+  name: Zona 2 Abilitata
+  initial: on
+
+irrigazione_automatica_abilitata:
+  name: Irrigazione Automatica
+  initial: on
+
+fascia_1_abilitata:
+  name: Fascia 1 Abilitata
+  initial: on
+fascia_2_abilitata:
+  name: Fascia 2 Abilitata
+  initial: on
+fascia_3_abilitata:
+  name: Fascia 3 Abilitata
+  initial: on

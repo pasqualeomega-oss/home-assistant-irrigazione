@@ -1,0 +1,9 @@
+{
+  "domain": "irrigazione",
+  "name": "Irrigazione Smart",
+  "version": "1.0.0",
+  "documentation": "https://github.com/pasqualeomega/home-assistant-irrigazione",
+  "dependencies": [],
+  "codeowners": ["@pasqualeomega"],
+  "requirements": []
+}

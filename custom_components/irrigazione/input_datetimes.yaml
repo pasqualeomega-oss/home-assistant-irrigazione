@@ -1,0 +1,15 @@
+{% for fascia in [1, 2, 3] %}
+{% for giorno in ['lunedi', 'martedi', 'mercoledi', 'giovedi', 'venerdi', 'sabato', 'domenica'] %}
+fascia_{{ fascia }}_{{ giorno }}_inizio:
+  name: Fascia {{ fascia }} Inizio {{ giorno | capitalize }}
+  has_date: false
+  has_time: true
+  initial: "06:00"
+
+fascia_{{ fascia }}_{{ giorno }}_fine:
+  name: Fascia {{ fascia }} Fine {{ giorno | capitalize }}
+  has_date: false
+  has_time: true
+  initial: "06:30"
+{% endfor %}
+{% endfor %}

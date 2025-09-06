@@ -1,0 +1,11 @@
+giorni_irrigazione:
+  name: Giorni Irrigazione
+  options:
+    - lunedi
+    - martedi
+    - mercoledi
+    - giovedi
+    - venerdi
+    - sabato
+    - domenica
+  initial: lunedi
